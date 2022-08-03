@@ -54,7 +54,7 @@ pipeline {
         }
       }
     }
-    /**stage('Test') {
+    stage('Test') {
       steps {
         container('maven') {
           sh 'mvn test'
@@ -81,7 +81,7 @@ pipeline {
                 }
             }
         }
-    } */
+    } 
     stage('Build Image') {
        steps {
          container('docker') {
@@ -121,9 +121,10 @@ pipeline {
     stage('Deploy') {
       steps {
          container('kubectl') {
-             sh 'kubectl config set-context --current --namespace=default'
-             sh 'kubectl apply -f backendbluedeployment.yaml'
-             sh 'kubectl apply -f backendgreendeployment.yaml'
+               sh 'kubectl get pods --all-namespaces'
+             //sh 'kubectl config set-context --current --namespace=default'
+             //sh 'kubectl apply -f backendbluedeployment.yaml'
+             //sh 'kubectl apply -f backendgreendeployment.yaml'
            
          }
         
