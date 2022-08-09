@@ -45,12 +45,12 @@ public class UserServiceImpl implements UserService {
     try {
       String subject = "Password Reset Request";
       String siteurl =
-        "http://aac53e81081b042258fc80efa94a009c-104931072.us-east-1.elb.amazonaws.com:3000/reset-password/" +
+        "*reset-password/" +
         id;
       String senderName = "RevatureMerchTeam";
       String mailContent =
         "<p>Click the link below to change your password</p>" +
-        "<a href=\"http://aac53e81081b042258fc80efa94a009c-104931072.us-east-1.elb.amazonaws.com:3000/reset-password/" +
+        "<a href=\"*reset-password/" +
         id +
         "\"> Link to Reset Password</a>" +
         "<br> <p>Thank you for shopping with us</p>";
