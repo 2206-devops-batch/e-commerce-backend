@@ -64,12 +64,12 @@ pipeline {
     stage('SonarCloud analysis') {
         steps {       
             script {
-                nodejs(nodeJSInstallationName: 'nodejs'){ 
+                //nodejs(nodeJSInstallationName: 'nodejs'){ 
                   def scannerHome = tool 'sonar scanner';             
                   withSonarQubeEnv('SonarCloud') { 
                     sh "${scannerHome}/bin/sonar-scanner"
                   }
-                }
+                //}
             }
         }
     }
