@@ -6,13 +6,13 @@ USER root
 
 # Make sure the package repository is up to date.
 RUN apt-get update -y && apt-get install -y curl sudo && \
-# Install maven
+    # Install maven
     #sudo apt install maven && \
     #sudo apt install default-jdk
-# Install EKSCTL
-#RUN curl --silent –location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-# Install Docker
-RUN apt install docker.io
+    # Install EKSCTL
+    #RUN curl --silent –location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+    # Install Docker
+    RUN apt install docker.io
 RUN snap install docker
 # Install AWS CLI
 RUN apt install awscli -y

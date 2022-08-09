@@ -44,9 +44,7 @@ public class UserServiceImpl implements UserService {
   public void sendEmail(String email, int id) {
     try {
       String subject = "Password Reset Request";
-      String siteurl =
-        "*reset-password/" +
-        id;
+      String siteurl = "*reset-password/" + id;
       String senderName = "RevatureMerchTeam";
       String mailContent =
         "<p>Click the link below to change your password</p>" +

@@ -5,13 +5,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: ${DB_PLATFORM} #org.hibernate.dialect.PostgreSQLDialect 
+    database-platform: ${DB_PLATFORM} #org.hibernate.dialect.PostgreSQLDialect
     defer-datasource-initialization: true
   datasource:
     #platform: postgres # might change to postgresql # !ENV ${DATASOURCE_PLATFORM}
     url: ${DB_URL} #jdbc:postgresql://db-service.p3-space.svc.cluster.local:5432/postgres?user=postgres&password=example
 
-    driver-class-name: ${DB_DRIVER} #org.postgresql.Driver 
+    driver-class-name: ${DB_DRIVER} #org.postgresql.Driver
     username: postgres
     password: example
     initialization-mode: always
@@ -31,8 +31,8 @@ spring:
 management:
   endpoints:
     web:
-      base-path: "/"
+      base-path: '/'
       path-mapping:
-        prometheus: "metrics"
+        prometheus: 'metrics'
       exposure:
-        include: "health,prometheus,info"
+        include: 'health,prometheus,info'
