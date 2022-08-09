@@ -124,7 +124,7 @@ pipeline {
           //sh 'kubectl get pods --all-namespaces'
           sh 'kubectl apply -f backendbluedeployment.yaml'
           sh 'kubectl apply -f backendgreendeployment.yaml'
-          sh 'kubectl apply -f bluegreenbackendservice.yaml
+          sh 'kubectl apply -f bluegreenbackendservice.yaml'
         }
       }
     }
