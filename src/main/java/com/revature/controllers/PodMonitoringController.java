@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/test")
 @CrossOrigin(
-  origins = "http://aac53e81081b042258fc80efa94a009c-104931072.us-east-1.elb.amazonaws.com:3000/",
+  origins = "http://2205java-sre-p3.s3-website-us-east-1.amazonaws.com/",
   allowCredentials = "true"
 )
 public class PodMonitoringController {
