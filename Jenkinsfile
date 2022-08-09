@@ -87,6 +87,8 @@ pipeline {
         container('docker') {
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker build -t othom/e-commerce-backend-blue:$BUILD_NUMBER .'
+            sh 'docker build -t othom/e-commerce-backend-green:$BUILD_NUMBER .'
+            sh 'docker build -t othom/e-commerce-backend-blue:latest .'
             sh 'docker build -t othom/e-commerce-backend-green:latest .'
           }
         }
@@ -106,6 +108,8 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u ${username} -p ${password}'
             sh 'docker push othom/e-commerce-backend-blue:$BUILD_NUMBER'
+            sh 'docker push othom/e-commerce-backend-green:$BUILD_NUMBER'
+            sh 'docker push othom/e-commerce-backend-blue:latest'
             sh 'docker push othom/e-commerce-backend-green:latest'
           }
         }
