@@ -3,16 +3,16 @@ kind: Service
 metadata:
   name: backend-green
   annotations:
-    service.beta.kubernetes.io/linode-loadbalancer-throttle: "4"
+    service.beta.kubernetes.io/linode-loadbalancer-throttle: '4'
   labels:
     app: backend-green
 spec:
   type: LoadBalancer
   ports:
-  - name: http
-    port: 5000
-    protocol: TCP
-    targetPort: 5000
+    - name: http
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
   selector:
     app: backend-green
   sessionAffinity: None

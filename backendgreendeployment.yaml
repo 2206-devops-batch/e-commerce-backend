@@ -15,9 +15,8 @@ spec:
         app: backend-green
     spec:
       containers:
-      - name: backend-green
-        image: othom/e-commerce-backend-green:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5000
-        
+        - name: backend-green
+          image: othom/e-commerce-backend-green:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000

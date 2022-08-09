@@ -15,8 +15,8 @@ spec:
         app: backend-blue
     spec:
       containers:
-      - name: backend-blue
-        image: othom/e-commerce-backend-blue:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5000
+        - name: backend-blue
+          image: othom/e-commerce-backend-blue:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
