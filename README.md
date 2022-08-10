@@ -1,12 +1,20 @@
 ## E-Commerce Application
 
+Changed Repo Name use this to update your remote
+
+```sh
+git remote set-url origin https://github.com/2206-devops-batch/e-commerce-backend.git
+```
+
 ### Application to buy Revature Swag.
 
 This application is a functional website written in Java and typescript. It will allow users to register and select from listed products for purchase, add them to the cart, and check out. If a user forgets their password they can have it reset. A guest or user can look at products and get a pop up view of the item, and its discription. The user or guest can see how many of a product are in stock. The user or guest can search items by key word.
 
+<!--
 Working application can be found here:
 
 ### `https://production.dcs2jw2334qwo.amplifyapp.com/`
+-->
 
 ## Install Instructions for developers
 
@@ -41,7 +49,8 @@ which will run the Spring enviornment
 
 The enviornment will be limited to the test data contained in this source code.
 
-----------
+-----------
+
 To run the front end, navigate to its directory and run the command:
 
 ### `npm install`
@@ -52,7 +61,7 @@ After that, running the command:
 
 within the directory will open the application in your browser.
 
-----------
+-----------
 
 ## Docker instructions
 
@@ -68,4 +77,4 @@ in the directory of your choosing. Open with your Docker desktop and run as a co
 
 <https://www.how2shout.com/linux/how-to-install-sudo-on-debian-or-ubuntu-linux/>
 <https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins/#blue-green-deployment>
-<https://www.youtube.com/watch?v=bm6RYgVuAzo>
+**<https://www.youtube.com/watch?v=bm6RYgVuAzo>**
