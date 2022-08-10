@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: green-deployment
+  name: backend-green-deployment
   labels:
-    app: backend-blue-green
+    app: backend-green
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: green
+      app: backend-green
 
   template:
     metadata:
       labels:
-        app: green
+        app: backend-green
     spec:
       containers:
         - name: green-container

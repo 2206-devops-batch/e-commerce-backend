@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: blue-green-prod-service
+  name: blue-green-backend
   labels:
     app: backend-blue-green
 
@@ -11,27 +11,8 @@ spec:
   ports:
     - name: http-port
       port: 5000
-      targetPort: 5000
+      targetPort: 80
       protocol: TCP
   selector:
-    app: blue
-    # app: green
----
-apiVersion: v1
-kind: Service
-
-metadata:
-  name: blue-green-straging-service
-  labels:
-    app: backend-blue-green
-
-spec:
-  type: LoadBalancer
-  ports:
-    - name: http-port
-      port: 5005
-      targetPort: 5005
-      protocol: TCP
-  selector:
-    # app: blue
-    app: green
+    app: backend-blue
+    # app: backend-green
