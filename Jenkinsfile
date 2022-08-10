@@ -1,4 +1,12 @@
 pipeline {
+  // environment {
+  //   registry = 'chrisbarnes2000' // 'othom'
+  //   repo = 'e-commerce-backend'
+  //   DOCKERHUB_CREDENTIALS = credentials('DOCKER_AUTH_ID')
+  //   DOCKERHUB_REPO = "${registry}/${repo}"
+  //   TAG = "${BUILD_NUMBER}" // 'latest'
+  // }
+
   agent {
     kubernetes {
       yaml '''
@@ -87,16 +95,16 @@ pipeline {
             // Use Blue  as Stable  / Production Env. e.g. $BUILD_NUMBER 15 works but backend cors issue with backend
             // Use Green as Staging / Dev Environment e.g. $BUILD_NUMBER 55 fixes backend cors issue with backend but has XYZ error
 
-            when {
-              branch 'blue'
-            }
+            // when {
+            //   branch 'blue'
+            // }
             // Build Blue Backend
             sh 'docker build -t othom/e-commerce-backend:blue-$BUILD_NUMBER .'
             sh 'docker build -t othom/e-commerce-backend:blue-lts .'
 
-            when {
-              branch 'green'
-            }
+            // when {
+            //   branch 'green'
+            // }
             // Build Green Backend
             sh 'docker build -t othom/e-commerce-backend:green-$BUILD_NUMBER .'
             sh 'docker build -t othom/e-commerce-backend:green-lts .'
@@ -125,16 +133,16 @@ pipeline {
             // Use Blue  as Stable  / Production Env. e.g. $BUILD_NUMBER 15 works but backend cors issue with backend
             // Use Green as Staging / Dev Environment e.g. $BUILD_NUMBER 55 fixes backend cors issue with backend but has XYZ error
 
-            when {
-              branch 'blue'
-            }
+            // when {
+            //   branch 'blue'
+            // }
             // Blue Backend -- Push
             sh 'docker push othom/e-commerce-backend:blue-$BUILD_NUMBER'
             sh 'docker push othom/e-commerce-backend:blue-lts'
 
-            when {
-              branch 'green'
-            }
+            // when {
+            //   branch 'green'
+            // }
             // Green Backend -- Push
             sh 'docker push othom/e-commerce-backend:green-$BUILD_NUMBER'
             sh 'docker push othom/e-commerce-backend:green-lts'
@@ -157,8 +165,8 @@ pipeline {
           // Start Service To Host Both Blue & Green Builds
           sh 'kubectl apply -f backend-service.yaml'            // Swap Lines 17 & 18 for Production To Display Green   ---   Lines 36 & 37 for Staging i.e. app: orange
           // Deploy Blue (Stable) Build & Green (Dev) Build
-          sh 'kubectl apply -f backend-deployment.yaml'
-          sh 'kubectl apply -f backend-deployment.yaml'
+          sh 'kubectl apply -f backend-deployment-blue.yaml'
+          sh 'kubectl apply -f backend-deployment-green.yaml'
         }
       }
     }
