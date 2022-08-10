@@ -3,7 +3,7 @@
 Changed Repo Name use this to update your remote
 
 ```sh
-git remote set-url origin https://github.com/2206-devops-batch/e-commerce-backend.git
+git remote set-url origin https://github.com/2206-devops-batch/e-commerce-frontend.git
 ```
 
 ### Application to buy Revature Swag.
