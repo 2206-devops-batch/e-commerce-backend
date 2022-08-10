@@ -1,29 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
-  name: backend-green
+  name: green-deployment
   labels:
-    app: backend-green
+    app: backend-blue-green
+
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend-green
+      app: green
+
   template:
     metadata:
       labels:
-        app: backend-green
+        app: green
     spec:
       containers:
-        - name: backend-green
+        - name: green-container
           image: othom/e-commerce-backend-green:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 5000
           resources:
             requests:
-              memory: '64Mi'
-              cpu: '250m'
+              cpu: '10m' #1% of a core
+              memory: '150Mi'
             limits:
-              memory: '128Mi'
-              cpu: '500m'
+              cpu: '50m' #5% of a core
+              memory: '400Mi'
+          imagePullPolicy: Always
+      restartPolicy: Always

@@ -43,7 +43,7 @@ pipeline {
     stage('Trivy Scan: git') {
       steps {
         container('trivy') {
-          sh 'trivy repo https://github.com/2206-devops-batch/e-commerce-backend-blue'
+          sh 'trivy repo https://github.com/2206-devops-batch/e-commerce-backend.git'
         }
       }
     }
@@ -81,17 +81,20 @@ pipeline {
         container('docker') {
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u ${username} -p ${password}'
+
             // Version -- Backend Docker Images -- Blue & Green -- Based on latest pipeline build
             sh 'docker build -t othom/e-commerce-backend-blue:$BUILD_NUMBER .'
             sh 'docker build -t othom/e-commerce-backend-green:$BUILD_NUMBER .'
+
             // Version -- Backend Docker Images -- Blue & Green -- Latest Build
             sh 'docker build -t othom/e-commerce-backend-blue:latest .'
             sh 'docker build -t othom/e-commerce-backend-green:latest .'
 
             // Push All Recent Build
             sh 'docker push othom/e-commerce-backend-blue:$BUILD_NUMBER'
-            sh 'docker push othom/e-commerce-backend-green:$BUILD_NUMBER'
             sh 'docker push othom/e-commerce-backend-blue:latest'
+
+            sh 'docker push othom/e-commerce-backend-green:$BUILD_NUMBER'
             sh 'docker push othom/e-commerce-backend-green:latest'
 
           // Note these should really be broken up into separete branches pipelines but for demo sake we are running both off latest changes
@@ -124,7 +127,7 @@ pipeline {
           //sh 'kubectl get pods --all-namespaces'
 
           // Start Service To Host Both Blue & Green Builds
-          sh 'kubectl apply -f backend-service.yaml'
+          sh 'kubectl apply -f backend-service.yaml'            // Swap Lines 17 & 18 for Production To Display Green   ---   Lines 36 & 37 for Staging i.e. app: orange
           // Deploy Blue (Stable) Build & Green (Dev) Build
           sh 'kubectl apply -f backend-deployment-blue.yaml'
           sh 'kubectl apply -f backend-deployment-green.yaml'

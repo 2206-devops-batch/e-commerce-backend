@@ -67,3 +67,5 @@ in the directory of your choosing. Open with your Docker desktop and run as a co
 ## Links
 
 <https://www.how2shout.com/linux/how-to-install-sudo-on-debian-or-ubuntu-linux/>
+<https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins/#blue-green-deployment>
+<https://www.youtube.com/watch?v=bm6RYgVuAzo>
