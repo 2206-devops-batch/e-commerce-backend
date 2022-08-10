@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: green-container
-          image: othom/e-commerce-backend-green:latest
+          image: othom/e-commerce-backend:green-lts
           resources:
             requests:
               cpu: '10m' #1% of a core

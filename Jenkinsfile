@@ -76,30 +76,30 @@ pipeline {
         }
       }
     }
-    stage('Docker Build & Push') {
+    stage('Docker Build') {
       steps {
         container('docker') {
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u ${username} -p ${password}'
 
-            // Version -- Backend Docker Images -- Blue & Green -- Based on latest pipeline build
-            sh 'docker build -t othom/e-commerce-backend-blue:$BUILD_NUMBER .'
-            sh 'docker build -t othom/e-commerce-backend-green:$BUILD_NUMBER .'
+            // Version -- Backend Docker Images
+            // Note these should really be broken up into separete branches pipelines but for demo sake we are running both off latest changes
+            // Use Blue  as Stable  / Production Env. e.g. $BUILD_NUMBER 15 works but backend cors issue with backend
+            // Use Green as Staging / Dev Environment e.g. $BUILD_NUMBER 55 fixes backend cors issue with backend but has XYZ error
 
-            // Version -- Backend Docker Images -- Blue & Green -- Latest Build
-            sh 'docker build -t othom/e-commerce-backend-blue:latest .'
-            sh 'docker build -t othom/e-commerce-backend-green:latest .'
+            when {
+              branch 'blue'
+            }
+            // Build Blue Backend
+            sh 'docker build -t othom/e-commerce-backend:blue-$BUILD_NUMBER .'
+            sh 'docker build -t othom/e-commerce-backend:blue-lts .'
 
-            // Push All Recent Build
-            sh 'docker push othom/e-commerce-backend-blue:$BUILD_NUMBER'
-            sh 'docker push othom/e-commerce-backend-blue:latest'
-
-            sh 'docker push othom/e-commerce-backend-green:$BUILD_NUMBER'
-            sh 'docker push othom/e-commerce-backend-green:latest'
-
-          // Note these should really be broken up into separete branches pipelines but for demo sake we are running both off latest changes
-          // Use Blue  as Stable  / Production Env. e.g. $BUILD_NUMBER 15 works but backend cors issue with backend
-          // Use Green as Staging / Dev Environment e.g. $BUILD_NUMBER 55 fixes backend cors issue with backend but has XYZ error
+            when {
+              branch 'green'
+            }
+            // Build Green Backend
+            sh 'docker build -t othom/e-commerce-backend:green-$BUILD_NUMBER .'
+            sh 'docker build -t othom/e-commerce-backend:green-lts .'
           }
         }
       }
@@ -107,10 +107,38 @@ pipeline {
     stage('Trivy Scan: image') {
       steps {
         container('trivy') {
-          sh "trivy image othom/e-commerce-backend-blue:$BUILD_NUMBER"
-          sh "trivy image othom/e-commerce-backend-green:$BUILD_NUMBER"
-          sh 'trivy image othom/e-commerce-backend-blue:latest'
-          sh 'trivy image othom/e-commerce-backend-green:latest'
+          sh "trivy image othom/e-commerce-backend:blue-$BUILD_NUMBER"
+          sh "trivy image othom/e-commerce-backend:green-$BUILD_NUMBER"
+          sh 'trivy image othom/e-commerce-backend:blue-lts'
+          sh 'trivy image othom/e-commerce-backend:green-lts'
+        }
+      }
+    }
+    stage('Docker Push') {
+      steps {
+        container('docker') {
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
+            sh 'docker login -u ${username} -p ${password}'
+
+            // Version -- Backend Docker Images
+            // Note these should really be broken up into separete branches pipelines but for demo sake we are running both off latest changes
+            // Use Blue  as Stable  / Production Env. e.g. $BUILD_NUMBER 15 works but backend cors issue with backend
+            // Use Green as Staging / Dev Environment e.g. $BUILD_NUMBER 55 fixes backend cors issue with backend but has XYZ error
+
+            when {
+              branch 'blue'
+            }
+            // Blue Backend -- Push
+            sh 'docker push othom/e-commerce-backend:blue-$BUILD_NUMBER'
+            sh 'docker push othom/e-commerce-backend:blue-lts'
+
+            when {
+              branch 'green'
+            }
+            // Green Backend -- Push
+            sh 'docker push othom/e-commerce-backend:green-$BUILD_NUMBER'
+            sh 'docker push othom/e-commerce-backend:green-lts'
+          }
         }
       }
     }
@@ -129,8 +157,8 @@ pipeline {
           // Start Service To Host Both Blue & Green Builds
           sh 'kubectl apply -f backend-service.yaml'            // Swap Lines 17 & 18 for Production To Display Green   ---   Lines 36 & 37 for Staging i.e. app: orange
           // Deploy Blue (Stable) Build & Green (Dev) Build
-          sh 'kubectl apply -f backend-deployment-blue.yaml'
-          sh 'kubectl apply -f backend-deployment-green.yaml'
+          sh 'kubectl apply -f backend-deployment.yaml'
+          sh 'kubectl apply -f backend-deployment.yaml'
         }
       }
     }
