@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResetRequestPassword {
 
-  private String password;
+    private String password;
+
 }

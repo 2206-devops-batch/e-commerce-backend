@@ -3,4 +3,6 @@ package com.revature.repositories;
 import com.revature.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository extends JpaRepository<Product, Integer> {}
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+}
