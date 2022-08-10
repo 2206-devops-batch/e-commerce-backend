@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/product")
-@CrossOrigin(origins = "http://2205java-sre-p3.s3-website-us-east-1.amazonaws.com/", allowCredentials = "true")
+@CrossOrigin(origins = "http://aac53e81081b042258fc80efa94a009c-104931072.us-east-1.elb.amazonaws.com:3000/", allowCredentials = "true")
 public class ProductController {
 
     private final ProductServiceImpl productService;
@@ -29,7 +29,7 @@ public class ProductController {
         if (query == null) {
           return ResponseEntity.ok(productService.findAll());
         }
-  
+
         return ResponseEntity.ok(productService.searchProduct(query));
     }
 
@@ -48,7 +48,7 @@ public class ProductController {
 
     @Authorized
     @PatchMapping
-    public ResponseEntity<List<Product>> purchase(@RequestBody List<ProductInfo> metadata) { 	
+    public ResponseEntity<List<Product>> purchase(@RequestBody List<ProductInfo> metadata) {
     	List<Product> productList = new ArrayList<>();
 
         for (ProductInfo metadatum : metadata) {
@@ -67,7 +67,7 @@ public class ProductController {
             product.setQuantity(product.getQuantity() - metadatum.getQuantity());
             productList.add(product);
         }
-        
+
         productService.saveAll(productList, metadata);
 
         return ResponseEntity.ok(productList);

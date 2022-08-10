@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://2205java-sre-p3.s3-website-us-east-1.amazonaws.com/", allowCredentials = "true")
+@CrossOrigin(origins = "http://aac53e81081b042258fc80efa94a009c-104931072.us-east-1.elb.amazonaws.com:3000/", allowCredentials = "true")
 public class AuthController{
 
     private final AuthService authService;
@@ -47,10 +47,10 @@ public class AuthController{
         }
         Cookie username = new Cookie("user", optionalUser.get().getEmail());
         Cookie pass = new Cookie("auth", loginRequest.getPassword());
-        
+
         username.setPath("/");
         pass.setPath("/");
-        
+
         response.addCookie(username);
         response.addCookie(pass);
 
@@ -85,7 +85,7 @@ public class AuthController{
         if (created.getId() > 0) return ResponseEntity.status(HttpStatus.CREATED).body(created);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(created);
     }
-  
+
     @PatchMapping("/users/{requestId}")
     public User responseEntity(@RequestBody ResetRequestPassword password, @PathVariable("requestId") int id) throws ExpiredRequestException {
         return authService.resetPassword(password.getPassword(),id);
